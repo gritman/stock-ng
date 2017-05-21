@@ -12,15 +12,15 @@
         <th>股票评级</th>
         <th>操作</th>
       </tr>
-      <tr>
-        <td>1.</td>
-        <td>Update software</td>
+      <tr *ngFor="let stock of stocks; let i = index;">
+        <td>{{i + 1}}</td>
+        <td>{{stock.name}}</td>
+        <td>{{stock.price}}</td>
+        <td>{{stock.rating}}</td>
         <td>
-          <div class="progress progress-xs">
-            <div class="progress-bar progress-bar-danger" style="width: 55%"></div>
-          </div>
+          <a>修改</a>
+          <a>删除</a>
         </td>
-        <td><span class="badge bg-red">55%</span></td>
       </tr>
     </table>
   </div>
