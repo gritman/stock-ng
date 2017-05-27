@@ -11,6 +11,12 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { ContentComponent } from './content/content.component';
 import { StockManageComponent } from './stock/stock-manage/stock-manage.component';
 import { StarsComponent } from './stars/stars.component';
+import {RouterModule, Routes} from '@angular/router';
+import { DashboardComponent } from './dashboard/dashboard.component';
+
+const routeConfig: Routes = [
+  {path: 'stock', component: StockManageComponent}
+];
 
 @NgModule({
   declarations: [
@@ -21,12 +27,14 @@ import { StarsComponent } from './stars/stars.component';
     SidebarComponent,
     ContentComponent,
     StockManageComponent,
-    StarsComponent
+    StarsComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
-    HttpModule
+    HttpModule,
+    RouterModule.forRoot(routeConfig) // 把配置加到根模块
   ],
   providers: [],
   bootstrap: [AppComponent]
