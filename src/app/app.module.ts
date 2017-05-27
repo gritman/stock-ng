@@ -28,6 +28,10 @@ const routeConfig: Routes = [
   {
     path: 'stock',
     component: StockManageComponent
+  },
+  {
+    path: 'stock/:id',
+    component: StockFormComponent
   }
 ];
 

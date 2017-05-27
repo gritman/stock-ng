@@ -12,6 +12,7 @@ export class ContentComponent implements OnInit {
   private pageDesc = '';
 
   constructor(public router: Router) {
+    // 监听路由结束事件,根据路由的不同,显示不同的页面标题
     router.events
       .filter(event => event instanceof NavigationEnd)
       .subscribe((event: NavigationEnd) => {
