@@ -22,7 +22,11 @@ export class StockService {
   }
 
   getStock(id: number): Stock {
-    return this.stocks.find(stock => stock.id == id);
+    let stock = this.stocks.find(stock => stock.id == id);
+    if (!stock) {
+      stock = new Stock(0, '', 0, 0, '', []);
+    }
+    return stock;
   }
 
 }
