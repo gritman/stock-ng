@@ -22,6 +22,9 @@ export class ContentComponent implements OnInit {
         } else if (event.url.startsWith('/stock')) {
           this.pageTitle = '股票信息管理';
           this.pageDesc = '进行股票基本信息增删改查';
+        } else {
+          this.pageTitle = '这里是首页';
+          this.pageDesc = '首页描述';
         }
       });
   }
