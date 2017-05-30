@@ -1,4 +1,4 @@
-import {Component, OnInit, Input} from '@angular/core';
+import {Component, OnInit, Input, EventEmitter, Output} from '@angular/core';
 
 @Component({
   selector: 'app-stars',
@@ -9,10 +9,14 @@ export class StarsComponent implements OnInit {
 
   @Input()
   private rating = 0;
-  private stars: boolean[];
 
   @Input()
   readonly = true;
+
+  @Output()
+  ratingChange: EventEmitter<number> = new EventEmitter();
+
+  private stars: boolean[];
 
   constructor() {
   }
@@ -33,6 +37,7 @@ export class StarsComponent implements OnInit {
       for (let i = 1; i <= 5; ++i) {
         this.stars.push(i > this.rating);
       }
+      this.ratingChange.emit(this.rating);
     }
   }
 }
