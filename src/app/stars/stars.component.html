@@ -1,4 +1,6 @@
-<span *ngFor="let star of stars"
-      class="glyphicon glyphicon-star" [class.glyphicon-star-empty]="star == true">
+<!-- index是ngFor内置的变量,记录了循环的下标 -->
+<span *ngFor="let star of stars; let i = index;"
+      class="glyphicon glyphicon-star" [class.glyphicon-star-empty]="star == true"
+      (click)="clickStar(i)">
 
 </span>

@@ -23,4 +23,11 @@ export class StarsComponent implements OnInit {
     }
   }
 
+  clickStar(index: number) {
+    this.rating = index + 1;
+    this.stars = []; // 必须先初始化
+    for (let i = 1; i <= 5; ++i) {
+      this.stars.push(i > this.rating);
+    }
+  }
 }
