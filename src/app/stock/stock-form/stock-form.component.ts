@@ -34,9 +34,9 @@ export class StockFormComponent implements OnInit {
         // 股票星级自定义控件不能这样绑定
         desc: [this.stock.desc],
         categories: fb.array([
-          new FormControl(),
-          new FormControl(),
-          new FormControl()
+          new FormControl(this.stock.categories.indexOf(this.categories[0]) != -1),
+          new FormControl(this.stock.categories.indexOf(this.categories[1]) != -1),
+          new FormControl(this.stock.categories.indexOf(this.categories[2]) != -1)
         ])
       }
     );
@@ -47,6 +47,15 @@ export class StockFormComponent implements OnInit {
   }
 
   save() {
+    const chineseCategories = [];
+    var index = 0;
+    for (var i = 0; i < 3; ++i) {
+      if (this.formModel.value.categories[i]) {
+        chineseCategories[index++] = this.categories[i];
+      }
+    }
+    this.formModel.value.categories = chineseCategories;
+    this.formModel.value.rating = this.stock.rating;
     console.log(this.formModel.value);
     // this.router.navigateByUrl('/stock');
   }
