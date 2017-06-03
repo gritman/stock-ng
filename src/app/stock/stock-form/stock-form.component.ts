@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Stock, StockService} from '../stock.service';
 import {ActivatedRoute, Router} from '@angular/router';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-stock-form',
@@ -37,7 +37,7 @@ export class StockFormComponent implements OnInit {
           new FormControl(this.stock.categories.indexOf(this.categories[0]) != -1),
           new FormControl(this.stock.categories.indexOf(this.categories[1]) != -1),
           new FormControl(this.stock.categories.indexOf(this.categories[2]) != -1)
-        ])
+        ], this.categoriesSelectValidation)
       }
     );
   }
@@ -48,8 +48,8 @@ export class StockFormComponent implements OnInit {
 
   save() {
     const chineseCategories = [];
-    var index = 0;
-    for (var i = 0; i < 3; ++i) {
+    let index = 0;
+    for (let i = 0; i < 3; ++i) {
       if (this.formModel.value.categories[i]) {
         chineseCategories[index++] = this.categories[i];
       }
@@ -58,5 +58,20 @@ export class StockFormComponent implements OnInit {
     this.formModel.value.rating = this.stock.rating;
     console.log(this.formModel.value);
     // this.router.navigateByUrl('/stock');
+  }
+
+  // 验证器:必须选一个复选框
+  categoriesSelectValidation(control: FormArray) {
+    let valid = false;
+    control.controls.forEach(elem => {
+      if (elem.value) {
+        valid = true;
+      }
+    });
+    if (valid) {
+      return null;
+    } else {
+      return {categoriesLength: true};
+    }
   }
 }
