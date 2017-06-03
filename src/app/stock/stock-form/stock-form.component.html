@@ -8,16 +8,18 @@
   <form [formGroup]="formModel" class="form-horizontal">
     <div class="box-body">
 
-      <div class="form-group" [class.has-error]="formModel.hasError('minlength', 'name') || formModel.hasError('required', 'name')">
+      <div class="form-group"
+           [class.has-error]="formModel.get('name').touched
+           && (formModel.hasError('minlength', 'name') || formModel.hasError('required', 'name'))">
         <label for="name" class="col-sm-2 control-label">股票名称</label>
         <div class="col-sm-6">
           <!-- 通过formControlName把name绑定到模型 -->
           <input formControlName="name" type="text" class="form-control" id="name" placeholder="股票名称">
         </div>
-        <span class="help-block" [class.hidden]="!formModel.hasError('required', 'name')">
+        <span class="help-block" [class.hidden]="formModel.get('name').untouched || !formModel.hasError('required', 'name')">
           股票名是必填項
         </span>
-        <span class="help-block" [class.hidden]="!formModel.hasError('minlength', 'name')">
+        <span class="help-block" [class.hidden]="formModel.get('name').untouched || !formModel.hasError('minlength', 'name')">
           请至少输入3个字
         </span>
       </div>
@@ -72,7 +74,7 @@
     <!-- /.box-body -->
     <div class="box-footer">
       <button (click)="cancel()" type="submit" class="btn btn-default">取消</button>
-      <button (click)="save()" type="submit" class="btn btn-info pull-right">保存</button>
+      <button (click)="save()" [disabled]="formModel.invalid" type="submit" class="btn btn-info pull-right">保存</button>
     </div>
     <!-- /.box-footer -->
   </form>

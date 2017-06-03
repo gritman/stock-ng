@@ -14,7 +14,8 @@ export class StockFormComponent implements OnInit {
 
   categories = ['IT', '互联网', '金融'];
 
-  stock: Stock;
+  // 要赋初始值,避免stock是空的情况
+  stock: Stock = new Stock(0, '', 0, 0, '', []);
 
   constructor(private routeInfo: ActivatedRoute,
               private stockService: StockService,
@@ -23,21 +24,38 @@ export class StockFormComponent implements OnInit {
 
   ngOnInit() {
     const stockId = this.routeInfo.snapshot.params['id'];
-    this.stock = this.stockService.getStock(stockId);
 
     const fb = new FormBuilder();
     // 表单模型定义
     this.formModel = fb.group(
       {
-        name: [this.stock.name, [Validators.required, Validators.minLength(3)]],
-        price: [this.stock.price, Validators.required],
+        name: ['', [Validators.required, Validators.minLength(3)]],
+        price: ['', Validators.required],
         // 股票星级自定义控件不能这样绑定
-        desc: [this.stock.desc],
+        desc: [''],
         categories: fb.array([
-          new FormControl(this.stock.categories.indexOf(this.categories[0]) != -1),
-          new FormControl(this.stock.categories.indexOf(this.categories[1]) != -1),
-          new FormControl(this.stock.categories.indexOf(this.categories[2]) != -1)
+          new FormControl(false),
+          new FormControl(false),
+          new FormControl(false)
         ], this.categoriesSelectValidation)
+      }
+    );
+
+    // 异步拿到的stock数据,可能没拿到就去渲染页面了,就会出现很多undefine
+    this.stockService.getStock(stockId).subscribe(
+      data => {
+        this.stock = data;
+        // 拿到数据后,再更新formModel,把股票的数据填上
+        this.formModel.reset({
+          name: data.name,
+          price: data.price,
+          desc: data.desc,
+          categories: [
+            data.categories.indexOf(this.categories[0]) !== -1,
+            data.categories.indexOf(this.categories[1]) !== -1,
+            data.categories.indexOf(this.categories[2]) !== -1
+          ]
+        });
       }
     );
   }
@@ -57,7 +75,7 @@ export class StockFormComponent implements OnInit {
     this.formModel.value.categories = chineseCategories;
     this.formModel.value.rating = this.stock.rating;
     console.log(this.formModel.value);
-    // this.router.navigateByUrl('/stock');
+    this.router.navigateByUrl('/stock');
   }
 
   // 验证器:必须选一个复选框

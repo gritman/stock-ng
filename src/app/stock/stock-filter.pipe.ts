@@ -6,7 +6,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class StockFilterPipe implements PipeTransform {
 
   transform(list: any[], field: string, keyword: string): any {
-    if(!field || !keyword) {
+    if (!field || !keyword) {
       return list;
     }
     return list.filter(item => {
