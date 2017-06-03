@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Stock, StockService} from '../stock.service';
 import {ActivatedRoute, Router} from '@angular/router';
+import {FormGroup} from '@angular/forms';
 
 @Component({
   selector: 'app-stock-form',
@@ -8,6 +9,8 @@ import {ActivatedRoute, Router} from '@angular/router';
   styleUrls: ['./stock-form.component.css']
 })
 export class StockFormComponent implements OnInit {
+
+  formModel: FormGroup; // 响应式表单
 
   stock: Stock;
 
