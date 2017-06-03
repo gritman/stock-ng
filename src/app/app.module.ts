@@ -14,8 +14,9 @@ import {StarsComponent} from './stars/stars.component';
 import {RouterModule, Routes} from '@angular/router';
 import {DashboardComponent} from './dashboard/dashboard.component';
 import { StockFormComponent } from './stock/stock-form/stock-form.component';
-import {StockService} from './stock/stock.service';
+import {Stock, StockService} from './stock/stock.service';
 import { StockFilterPipe } from './stock/stock-filter.pipe';
+import {WebSocketService} from "./shared/web-socket.service";
 
 const routeConfig: Routes = [
   {
@@ -58,7 +59,7 @@ const routeConfig: Routes = [
     ReactiveFormsModule, // 使用响应式编程,首先要引入这个模块
     RouterModule.forRoot(routeConfig) // 把配置加到根模块
   ],
-  providers: [StockService],
+  providers: [StockService, WebSocketService],
   bootstrap: [AppComponent]
 })
 export class AppModule {
