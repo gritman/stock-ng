@@ -11,7 +11,8 @@
       <div class="form-group">
         <label for="name" class="col-sm-2 control-label">股票名称</label>
         <div class="col-sm-6">
-          <input type="text" class="form-control" id="name" placeholder="股票名称">
+          <!-- 通过formControlName把name绑定到模型 -->
+          <input formControlName="name" type="text" class="form-control" id="name" placeholder="股票名称">
         </div>
       </div>
 
@@ -19,7 +20,7 @@
         <label for="price" class="col-sm-2 control-label">股票价格</label>
 
         <div class="col-sm-6">
-          <input type="number" class="form-control" id="price" placeholder="股票价格">
+          <input type="number" formControlName="price" class="form-control" id="price" placeholder="股票价格">
         </div>
       </div>
 
@@ -34,7 +35,7 @@
       <div class="form-group">
         <label class="col-sm-2 control-label">股票描述</label>
         <div class="col-sm-10">
-          <textarea class="form-control" rows="5">{{stock.desc}}</textarea>
+          <textarea formControlName="desc" class="form-control" rows="5"></textarea>
         </div>
       </div>
 
@@ -42,15 +43,15 @@
         <label class="col-sm-2 control-label">股票类型</label>
         <div class="col-sm-10">
           <div class="row">
-            <div class="col-sm-2">
-              <div class="checkbox"><label><input type="checkbox"> IT</label></div>
+
+            <div *ngFor="let category of categories; let i = index;" class="col-sm-2">
+              <div class="checkbox" formArrayName="categories">
+                <label>
+                  <input [formControlName]="i" type="checkbox"> {{category}}
+                </label>
+              </div>
             </div>
-            <div class="col-sm-2">
-              <div class="checkbox"><label><input type="checkbox"> 互联网</label></div>
-            </div>
-            <div class="col-sm-2">
-              <div class="checkbox"><label><input type="checkbox"> 金融</label></div>
-            </div>
+
           </div>
         </div>
       </div>
